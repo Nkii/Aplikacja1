@@ -1,0 +1,13 @@
+{% extends'base.html.twig' %}
+{% block body %}
+    {% include 'default/_form.html.twig' with {
+        page_title: 'title_answer_edit',
+        page_title_param: {'%id%': answer.id},
+        attr: {
+            method: 'PUT',
+            action: url('answer_edit', {'id': answer.id}),
+        },
+        form: form,
+        back_to_list_path: 'answer_index',
+    } %}
+{% endblock %}

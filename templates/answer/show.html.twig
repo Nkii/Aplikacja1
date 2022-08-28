@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title_answer_details'|trans({'%id%': answer.id|default('')}) }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ 'title_answer_details'|trans({'%id%': answer.id|default('')}) }}</h1>
+    {% if answer is defined and answer|length %}
+        <dl class="dl-horizontal">
+            <dt>{{ 'label_id'|trans }}</dt>
+            <dd>{{ answer.id }}</dd>
+            <dt>{{ 'label_date'|trans }}</dt>
+            <dd>{{  answer.createdAt|format_date('long') }}</dd>
+            <dt>{{ 'label_best_answer'|trans }}</dt>
+            <dd>{{  answer.bestAnswer }}</dd>
+            <dt>{{ 'label_question'|trans }}</dt>
+            <dd>{{  answer.question.title }}</dd>
+            <dt>{{ 'label_title'|trans }}</dt>
+            <dd>{{  answer.content }}</dd>
+        </dl>
+        <p>
+            <a href="{{ url('answer_index') }}" title="{{ 'action_back_to_list'|trans }}">
+                {{ 'action_back_to_list'|trans }}
+            </a>
+        </p>
+    {% else %}
+        <p>
+            {{ 'message_item_not_found'|trans }}
+        </p>
+    {% endif %}
+{% endblock %}

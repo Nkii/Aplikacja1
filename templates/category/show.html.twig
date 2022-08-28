@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title_category_details'|trans({'%id%': category.id|default('')}) }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ 'title_category_details'|trans({'%id%': category.id|default('')}) }}</h1>
+    {% if category is defined and category|length %}
+        <dl class="dl-horizontal">
+            <dt>{{ 'label_id'|trans }}</dt>
+            <dd>{{ category.id }}</dd>
+            <dt>{{ 'label_category'|trans }}</dt>
+            <dd>{{  category.name }}</dd>
+
+        </dl>
+        <p>
+            <a href="{{ url('category_index') }}" title="{{ 'action_back_to_list'|trans }}">
+                {{ 'action_back_to_list'|trans }}
+            </a>
+        </p>
+    {% else %}
+        <p>
+            {{ 'message_item_not_found'|trans }}
+        </p>
+    {% endif %}
+{% endblock %}

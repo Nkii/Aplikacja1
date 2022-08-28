@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title_answer_list'|trans }}
+{% endblock %}
+
+{% block body %}
+
+    <h1>{{ 'title_answer_list'|trans }}</h1>
+
+    {% if pagination is defined and pagination.items|length %}
+        <div class="navigation text-center">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+
+        <a href="{{ url('answer_create') }}" title="{{ 'action_create'|trans }}">
+                            {{ 'action_create'|trans }}
+        </a>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>{{ knp_pagination_sortable(pagination, 'label_id'|trans, 'answer.id') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label_date'|trans, 'answer.date') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label_title'|trans, 'question.title') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label_content'|trans, 'answer.content') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label_bestAnswer'|trans, 'answer.bestAnswer') }}</th>
+                <th>{{ 'label_actions'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for answer in pagination.items %}
+                <tr>
+                    <td>{{ answer.id }}</td>
+                    <td>{{ answer.createdAt|format_date('long')}}</td>
+                    <td>{{ answer.question.title }}</td>
+                    <td>{{ answer.content }}</td>
+                    <td>{{ answer.bestAnswer}}</td>
+
+                    <td>
+                        <a href="{{ url('answer_show', {id: answer.id}) }}" title="{{ 'action_view'|trans }}">
+                            {{ 'action_view'|trans }}
+                        </a>
+
+                        <a href="{{ url('answer_edit', {id: answer.id}) }}" title="{{ 'action_edit'|trans }}">
+                            {{ 'action_edit'|trans }}
+                        </a>
+{#
+                        {% if not answer.questions|length %}
+#}
+                            <a href="{{ url('answer_delete', {id: answer.id}) }}" title="{{ 'action_delete'|trans }}">
+                                {{ 'action_delete'|trans }}
+                            </a>
+                        {#{% endif %}#}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        {% include 'default/_single_flash_message.html.twig' with{
+        type:'warning',
+        message:'message_empty_list'|trans
+        }%}
+    {% endif %}
+{% endblock %}

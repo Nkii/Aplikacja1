@@ -1,0 +1,14 @@
+{% extends'base.html.twig' %}
+
+{% block body %}
+    {% include 'default/_form.html.twig' with {
+        page_title: 'title_tag_create',
+        attr: {
+            method: 'POST',
+            action: url('tag_create')
+        },
+        form: form,
+        submit_label: 'action_create'|trans,
+        back_to_list_path: 'tag_index',
+    } %}
+{% endblock %}
